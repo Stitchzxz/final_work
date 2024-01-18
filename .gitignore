@@ -1,0 +1,12 @@
+var_access.tf
+meta.txt
+terraform
+terraform.tfstate
+key.json
+terraform.tfstate.backup
+.terraform.lock.hcl
+.terraform/
+index.nginx-debian.html
+setup_ansible.sh
+all_servers
+sgroups.tf

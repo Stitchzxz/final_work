@@ -1,0 +1,19 @@
+---
+- name: install nginx and insert home page server1
+  hosts: web_servers
+  become: yes
+
+  vars:
+    source_file: ./my_web_site/index.nginx-debian.html
+    destin_file: /var/www/html/
+
+  tasks:
+  - name: install nginx
+    apt: name=nginx state=latest
+
+  - name: copy mypage to server
+    copy: src={{ source_file }} dest={{ destin_file }} mode=0555
+  
+  - name: start nginx and enable
+    service: name=nginx state=started enabled=yes
+...
