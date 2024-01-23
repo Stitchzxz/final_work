@@ -9,10 +9,15 @@
 
   tasks:
   - name: install nginx
-    apt: name=nginx state=latest
+    apt: 
+      name=nginx 
+      state=latest
 
   - name: copy mypage to server
-    copy: src={{ source_file }} dest={{ destin_file }} mode=0555
+    copy: 
+      src={{ source_file }} 
+      dest={{ destin_file }} 
+      mode=0555
   
   - name: start nginx and enable
     service: name=nginx state=started enabled=yes

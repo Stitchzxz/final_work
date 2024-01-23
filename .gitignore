@@ -6,7 +6,7 @@ key.json
 terraform.tfstate.backup
 .terraform.lock.hcl
 .terraform/
-index.nginx-debian.html
 setup_ansible.sh
-all_servers
-sgroups.tf
+
+.gitignore
+
