@@ -30,6 +30,7 @@
         - zabbix-frontend-php
         - zabbix-nginx-conf
         - zabbix-sql-scripts
+        - zabbix-agent
       state: present  
 
   - name: Install Mysql

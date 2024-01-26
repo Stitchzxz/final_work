@@ -4,3 +4,64 @@
   become: yes
 
   tasks:
+  
+  - name: import the elastic apt key
+    ansible.builtin.apt_key:
+      url: https://artifacts.elastic.co/GPG-KEY-elasticsearch
+      state: present
+
+  - name: install elastic repository
+    ansible.builtin.apt_repository:
+      repo: deb https://mirror.yandex.ru/mirrors/elastic/8/ stable main
+      state: present
+
+  - name: update cache repository
+    ansible.builtin.apt:
+      update_cache: yes
+
+  - name: install packages
+    ansible.builtin.apt:
+      name:
+        - apt-transport-https
+        - openjdk-8-jre-headless
+        - elasticsearch
+      state: present
+
+  - name: setting elasticsearch
+      ansible.builtin.lineinfile:
+        path: /etc/elasticsearch/elasticsearch.yml
+        regexp: "^#network.host: 192.168.0.1"
+        line: "network.host: 0.0.0.0"
+
+  - name: change security1
+      ansible.builtin.lineinfile:
+        path: /etc/elasticsearch/elasticsearch.yml
+        regexp: "^xpack.security.enabled: true"
+        line: "xpack.security.enabled: false"
+
+  - name: change security2
+      ansible.builtin.lineinfile:
+        path: /etc/elasticsearch/elasticsearch.yml
+        regexp: "^xpack.security.enrollment.enabled: true"
+        line: "xpack.security.enrollment.enabled: false"
+
+  - name: change security3
+      ansible.builtin.lineinfile:
+        path: /etc/elasticsearch/elasticsearch.yml
+        regexp: "^  enabled: true"
+        line: "  enabled: false"
+
+  - name: change security4
+      ansible.builtin.lineinfile:
+        path: /etc/elasticsearch/elasticsearch.yml
+        regexp: "^  enabled: true"
+        line: "  enabled: false"
+
+  - name: enable and restart elastic
+    ansible.builtin.systemd:
+      name: elasticsearch
+      enabled: true
+      daemon_reload: true
+      masked: no
+      state: started
+...

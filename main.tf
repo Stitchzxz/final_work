@@ -13,113 +13,113 @@ provider "yandex" {
 }
 
 
-//____________________VM-1_(NGINX-1)____________________________________
-resource "yandex_compute_instance" "vm-1" {
-  name = "nginx1"
-  platform_id = "standard-v3"
-  zone = "ru-central1-a"
-  hostname = "nginx1"
+# //____________________VM-1_(NGINX-1)____________________________________
+# resource "yandex_compute_instance" "vm-1" {
+#   name = "nginx1"
+#   platform_id = "standard-v3"
+#   zone = "ru-central1-a"
+#   hostname = "nginx1"
 
-  resources {
-    cores  = 2
-    memory = 2
-    core_fraction = 20
-  }
+#   resources {
+#     cores  = 2
+#     memory = 2
+#     core_fraction = 20
+#   }
 
-  scheduling_policy {
-    preemptible = true
-  }
+#   scheduling_policy {
+#     preemptible = true
+#   }
 
-  boot_disk {
-    initialize_params {
-      image_id = "fd8s4a9mnca2bmgol2r8"
-    }
-  }
+#   boot_disk {
+#     initialize_params {
+#       image_id = "fd8s4a9mnca2bmgol2r8"
+#     }
+#   }
 
-  network_interface {
-    subnet_id = yandex_vpc_subnet.subnet-1.id
-    nat       = false
-    ip_address = "192.168.1.11"
-    #security_group_ids = [yandex_vpc_security_group.balancer-sg.id]
-  }
-
-  
-  metadata = {
-    user-data = "${file("./meta.txt")}"
-  }
-}
-
-//_____________________VM-2__(NGINX-2)__________________________________
-resource "yandex_compute_instance" "vm-2" {
-  name = "nginx2"
-  platform_id = "standard-v3"
-  zone = "ru-central1-b"
-  hostname = "nginx2"
-
-  resources {
-    cores = 2
-    memory = 2
-    core_fraction = 20
-  }
-
-  scheduling_policy {
-    preemptible = true
-  }
-
-  boot_disk {
-    initialize_params {
-      image_id = "fd8s4a9mnca2bmgol2r8"
-    }
-  }
-
-  network_interface {
-    subnet_id = yandex_vpc_subnet.subnet-2.id
-    nat       = false
-    ip_address = "192.168.2.22"
-    #security_group_ids = [yandex_vpc_security_group.balancer-sg.id]
-  }
+#   network_interface {
+#     subnet_id = yandex_vpc_subnet.subnet-1.id
+#     nat       = false
+#     ip_address = "192.168.1.11"
+#     #security_group_ids = [yandex_vpc_security_group.balancer-sg.id]
+#   }
 
   
-  metadata = {
-    user-data = "${file("./meta.txt")}"
-  }
-}
+#   metadata = {
+#     user-data = "${file("./meta.txt")}"
+#   }
+# }
 
-//______________________VM-3_(ZABBIX)__________________________________
-resource "yandex_compute_instance" "vm-3" {
-  name = "zabbix"
-  platform_id = "standard-v3"
-  zone = "ru-central1-c"
-  hostname = "zabbix"
+# //_____________________VM-2__(NGINX-2)__________________________________
+# resource "yandex_compute_instance" "vm-2" {
+#   name = "nginx2"
+#   platform_id = "standard-v3"
+#   zone = "ru-central1-b"
+#   hostname = "nginx2"
 
-  resources {
-    cores  = 2
-    memory = 2
-    core_fraction = 20
-  }
+#   resources {
+#     cores = 2
+#     memory = 2
+#     core_fraction = 20
+#   }
 
-  scheduling_policy {
-    preemptible = true
-  }
+#   scheduling_policy {
+#     preemptible = true
+#   }
 
-  boot_disk {
-    initialize_params {
-      image_id = "fd8s4a9mnca2bmgol2r8"
-    }
-  }
+#   boot_disk {
+#     initialize_params {
+#       image_id = "fd8s4a9mnca2bmgol2r8"
+#     }
+#   }
 
-  network_interface {
-    subnet_id = yandex_vpc_subnet.subnet-3.id
-    nat       = true
-    ip_address = "192.168.3.33"
-    #security_group_ids = [yandex_vpc_security_group.zabbix-sg.id]
-  }
+#   network_interface {
+#     subnet_id = yandex_vpc_subnet.subnet-2.id
+#     nat       = false
+#     ip_address = "192.168.2.22"
+#     #security_group_ids = [yandex_vpc_security_group.balancer-sg.id]
+#   }
 
   
-  metadata = {
-    user-data = "${file("./meta.txt")}"
-  }
-}
+#   metadata = {
+#     user-data = "${file("./meta.txt")}"
+#   }
+# }
+
+# //______________________VM-3_(ZABBIX)__________________________________
+# resource "yandex_compute_instance" "vm-3" {
+#   name = "zabbix"
+#   platform_id = "standard-v3"
+#   zone = "ru-central1-c"
+#   hostname = "zabbix"
+
+#   resources {
+#     cores  = 2
+#     memory = 2
+#     core_fraction = 20
+#   }
+
+#   scheduling_policy {
+#     preemptible = true
+#   }
+
+#   boot_disk {
+#     initialize_params {
+#       image_id = "fd8s4a9mnca2bmgol2r8"
+#     }
+#   }
+
+#   network_interface {
+#     subnet_id = yandex_vpc_subnet.subnet-3.id
+#     nat       = true
+#     ip_address = "192.168.3.33"
+#     #security_group_ids = [yandex_vpc_security_group.zabbix-sg.id]
+#   }
+
+  
+#   metadata = {
+#     user-data = "${file("./meta.txt")}"
+#   }
+# }
 
 //______________________VM-4_(ELASTICSEARCH)______________________________
 resource "yandex_compute_instance" "vm-4" {
@@ -129,8 +129,8 @@ resource "yandex_compute_instance" "vm-4" {
   hostname = "elastic"
 
   resources {
-    cores  = 4
-    memory = 8
+    cores  = 2
+    memory = 4
     core_fraction = 20
   }
 
@@ -141,7 +141,7 @@ resource "yandex_compute_instance" "vm-4" {
   boot_disk {
     initialize_params {
       image_id = "fd8s4a9mnca2bmgol2r8"
-      size = 15
+      size = 10
     }
   }
 
@@ -158,41 +158,41 @@ resource "yandex_compute_instance" "vm-4" {
   }
 }
 
-//_________________________VM-5_(KIBANA)_____________________________________
-resource "yandex_compute_instance" "vm-5" {
-  name = "kibana"
-  platform_id = "standard-v3"
-  zone = "ru-central1-c"
-  hostname = "kibana"
+# //_________________________VM-5_(KIBANA)_____________________________________
+# resource "yandex_compute_instance" "vm-5" {
+#   name = "kibana"
+#   platform_id = "standard-v3"
+#   zone = "ru-central1-c"
+#   hostname = "kibana"
 
-  resources {
-    cores  = 2
-    memory = 2
-    core_fraction = 20
-  }
+#   resources {
+#     cores  = 2
+#     memory = 2
+#     core_fraction = 20
+#   }
 
-  scheduling_policy {
-    preemptible = true
-  }
+#   scheduling_policy {
+#     preemptible = true
+#   }
 
-  boot_disk {
-    initialize_params {
-      image_id = "fd8s4a9mnca2bmgol2r8"
-    }
-  }
+#   boot_disk {
+#     initialize_params {
+#       image_id = "fd8s4a9mnca2bmgol2r8"
+#     }
+#   }
 
-  network_interface {
-    subnet_id = yandex_vpc_subnet.subnet-3.id
-    nat       = true
-    ip_address = "192.168.3.34"
-    #security_group_ids = [yandex_vpc_security_group.kibana-sg.id]
-  }
+#   network_interface {
+#     subnet_id = yandex_vpc_subnet.subnet-3.id
+#     nat       = true
+#     ip_address = "192.168.3.34"
+#     #security_group_ids = [yandex_vpc_security_group.kibana-sg.id]
+#   }
 
   
-  metadata = {
-    user-data = "${file("./meta.txt")}"
-  }
-}
+#   metadata = {
+#     user-data = "${file("./meta.txt")}"
+#   }
+# }
 
 //______________________VM-6_(BASTION)________________________________________
 resource "yandex_compute_instance" "vm-6" {
@@ -238,106 +238,106 @@ resource "yandex_compute_instance" "vm-6" {
 
 
 
-//_________________________TARGET_GROUP___(ГОТОВО)________________________________________
-resource "yandex_alb_target_group" "ngx-target-group" {
-  name      = "ngx-target-group"
+# //_________________________TARGET_GROUP___(ГОТОВО)________________________________________
+# resource "yandex_alb_target_group" "ngx-target-group" {
+#   name      = "ngx-target-group"
 
-  target {
-    subnet_id = "${yandex_vpc_subnet.subnet-1.id}"
-    ip_address   = "${yandex_compute_instance.vm-1.network_interface.0.ip_address}"
-  }
+#   target {
+#     subnet_id = "${yandex_vpc_subnet.subnet-1.id}"
+#     ip_address   = "${yandex_compute_instance.vm-1.network_interface.0.ip_address}"
+#   }
 
-  target {
-    subnet_id = "${yandex_vpc_subnet.subnet-2.id}"
-    ip_address   = "${yandex_compute_instance.vm-2.network_interface.0.ip_address}"
-  }
-}
+#   target {
+#     subnet_id = "${yandex_vpc_subnet.subnet-2.id}"
+#     ip_address   = "${yandex_compute_instance.vm-2.network_interface.0.ip_address}"
+#   }
+# }
 
-//______________________BACKEND_GROUP______(ГОТОВО)____________________________________________
-resource "yandex_alb_backend_group" "nginx-backend-group" {
-  name      = "nginx-backend-group"
+# //______________________BACKEND_GROUP______(ГОТОВО)____________________________________________
+# resource "yandex_alb_backend_group" "nginx-backend-group" {
+#   name      = "nginx-backend-group"
 
-  http_backend {
-    name = "backend-1"
-    weight = 1
-    port = 80
-    target_group_ids = [yandex_alb_target_group.ngx-target-group.id]
+#   http_backend {
+#     name = "backend-1"
+#     weight = 1
+#     port = 80
+#     target_group_ids = [yandex_alb_target_group.ngx-target-group.id]
     
-    load_balancing_config {
-      panic_threshold = 0
-    }    
-    healthcheck {
-      timeout = "1s"
-      interval = "3s"
-      healthy_threshold    = 2
-      unhealthy_threshold  = 2 
-      healthcheck_port     = 80
-      http_healthcheck {
-        path  = "/"
-      }
-    }
-  }
-}
+#     load_balancing_config {
+#       panic_threshold = 0
+#     }    
+#     healthcheck {
+#       timeout = "1s"
+#       interval = "3s"
+#       healthy_threshold    = 2
+#       unhealthy_threshold  = 2 
+#       healthcheck_port     = 80
+#       http_healthcheck {
+#         path  = "/"
+#       }
+#     }
+#   }
+# }
 
-//_______________________HTTP-ROUTER___(ГОТОВО)______________________________________
-resource "yandex_alb_http_router" "nginx-router" {
-  name      = "nginx-router"
-}
+# //_______________________HTTP-ROUTER___(ГОТОВО)______________________________________
+# resource "yandex_alb_http_router" "nginx-router" {
+#   name      = "nginx-router"
+# }
 
-//______________________ВИРТУАЛЬНЫЙ__ХОСТ__(ГОТОВО)__________________________________
-resource "yandex_alb_virtual_host" "ngx-virtual-host" {
-  name                    = "ngx-virtual-host"
-  http_router_id          = yandex_alb_http_router.nginx-router.id
-  route {
-    name                  = "ngx-route"
-    http_route {
-      http_route_action {
-        backend_group_id  = yandex_alb_backend_group.nginx-backend-group.id
-      }
-    }
-  }
-}    
+# //______________________ВИРТУАЛЬНЫЙ__ХОСТ__(ГОТОВО)__________________________________
+# resource "yandex_alb_virtual_host" "ngx-virtual-host" {
+#   name                    = "ngx-virtual-host"
+#   http_router_id          = yandex_alb_http_router.nginx-router.id
+#   route {
+#     name                  = "ngx-route"
+#     http_route {
+#       http_route_action {
+#         backend_group_id  = yandex_alb_backend_group.nginx-backend-group.id
+#       }
+#     }
+#   }
+# }    
 
-//________________________Балансер____(ГОТОВО)_________________________________________
-resource "yandex_alb_load_balancer" "nginx-balancer" {
-name        = "nginx-balancer"
-  network_id  = yandex_vpc_network.network-1.id
+# //________________________Балансер____(ГОТОВО)_________________________________________
+# resource "yandex_alb_load_balancer" "nginx-balancer" {
+# name        = "nginx-balancer"
+#   network_id  = yandex_vpc_network.network-1.id
 
-  allocation_policy {
-    location {
-      zone_id   = "ru-central1-a"
-      subnet_id = yandex_vpc_subnet.subnet-1.id 
-    }
-    location {
-      zone_id   = "ru-central1-b"
-      subnet_id = yandex_vpc_subnet.subnet-2.id 
-    }
-    location {
-      zone_id   = "ru-central1-c"
-      subnet_id = yandex_vpc_subnet.subnet-3.id 
-    }
-    location {
-      zone_id   = "ru-central1-d"
-      subnet_id = yandex_vpc_subnet.subnet-4.id 
-    }
-  }
+#   allocation_policy {
+#     location {
+#       zone_id   = "ru-central1-a"
+#       subnet_id = yandex_vpc_subnet.subnet-1.id 
+#     }
+#     location {
+#       zone_id   = "ru-central1-b"
+#       subnet_id = yandex_vpc_subnet.subnet-2.id 
+#     }
+#     location {
+#       zone_id   = "ru-central1-c"
+#       subnet_id = yandex_vpc_subnet.subnet-3.id 
+#     }
+#     location {
+#       zone_id   = "ru-central1-d"
+#       subnet_id = yandex_vpc_subnet.subnet-4.id 
+#     }
+#   }
 
-  listener {
-    name = "my-listener"
-    endpoint {
-      address {
-        external_ipv4_address {
-        }
-      }
-      ports = [ 80 ]
-    }    
-    http {
-      handler {
-        http_router_id = yandex_alb_http_router.nginx-router.id
-      }
-    }
-  }
-}  
+#   listener {
+#     name = "my-listener"
+#     endpoint {
+#       address {
+#         external_ipv4_address {
+#         }
+#       }
+#       ports = [ 80 ]
+#     }    
+#     http {
+#       handler {
+#         http_router_id = yandex_alb_http_router.nginx-router.id
+#       }
+#     }
+#   }
+# }  
 
 
 
@@ -558,18 +558,18 @@ resource "yandex_vpc_security_group" "bastion-sg" {
 
 
 
-//_____________РАСПИСАНИЕ СНИМКОВ ДИСКОВ ВМ______(ГОТОВО)_____________________________________
-resource "yandex_compute_snapshot_schedule" "daily" {
-  name = "daily"
+# //_____________РАСПИСАНИЕ СНИМКОВ ДИСКОВ ВМ______(ГОТОВО)_____________________________________
+# resource "yandex_compute_snapshot_schedule" "daily" {
+#   name = "daily"
 
-  schedule_policy {
-    expression = "00 17 ? * *"
-  }
+#   schedule_policy {
+#     expression = "00 17 ? * *"
+#   }
 
-  retention_period = "168h"
+#   retention_period = "168h"
 
-  disk_ids = [yandex_compute_instance.vm-1.boot_disk.0.disk_id, yandex_compute_instance.vm-2.boot_disk.0.disk_id, yandex_compute_instance.vm-3.boot_disk.0.disk_id, yandex_compute_instance.vm-4.boot_disk.0.disk_id, yandex_compute_instance.vm-5.boot_disk.0.disk_id, yandex_compute_instance.vm-6.boot_disk.0.disk_id]
-}
+#   disk_ids = [yandex_compute_instance.vm-1.boot_disk.0.disk_id, yandex_compute_instance.vm-2.boot_disk.0.disk_id, yandex_compute_instance.vm-3.boot_disk.0.disk_id, yandex_compute_instance.vm-4.boot_disk.0.disk_id, yandex_compute_instance.vm-5.boot_disk.0.disk_id, yandex_compute_instance.vm-6.boot_disk.0.disk_id]
+# }
 
 
 
@@ -609,7 +609,7 @@ resource "yandex_vpc_subnet" "subnet-1" {
   zone           = "ru-central1-a"
   network_id     = yandex_vpc_network.network-1.id
   v4_cidr_blocks = ["192.168.1.0/24"]
-  route_table_id = yandex_vpc_route_table.nginx1-2_elastic.id
+  #route_table_id = yandex_vpc_route_table.nginx1-2_elastic.id
 }
 
 //_________________________ПОДСЕТЬ-2____________________________________
@@ -618,7 +618,7 @@ resource "yandex_vpc_subnet" "subnet-2" {
   zone           = "ru-central1-b"
   network_id     = yandex_vpc_network.network-1.id
   v4_cidr_blocks = ["192.168.2.0/24"]
-  route_table_id = yandex_vpc_route_table.nginx1-2_elastic.id
+  #route_table_id = yandex_vpc_route_table.nginx1-2_elastic.id
 }
 
 //_________________________ПОДСЕТЬ-3____________________________________
@@ -635,7 +635,7 @@ resource "yandex_vpc_subnet" "subnet-4" {
   zone           = "ru-central1-d"
   network_id     = yandex_vpc_network.network-1.id
   v4_cidr_blocks = ["192.168.4.0/24"]
-  #route_table_id = yandex_vpc_route_table.nginx1-2_elastic.id
+  route_table_id = yandex_vpc_route_table.nginx1-2_elastic.id
 }
 
 

@@ -1,6 +1,6 @@
 ---
 - name: install zabbix agent2
-  hosts: web_servers
+  hosts: web_servers, log_servers
   become: yes
 
   tasks:
@@ -30,7 +30,7 @@
   - name: correct config file zabbix agent2 
     ansible.builtin.lineinfile:
       path: /etc/zabbix/zabbix_agent2.conf
-      insertafter: "Server="
+      regexp: "^Server="
       line: Server=192.168.3.33
 
   - name: enable and restart zabbix-agent2
