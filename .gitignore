@@ -8,4 +8,5 @@ terraform.tfstate.backup
 .terraform/
 setup_ansible.sh
 .gitignore
+note
 
