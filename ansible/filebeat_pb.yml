@@ -1,6 +1,6 @@
 ---
 - name: install filebeat
-  hosts: nginx1 #web_servers
+  hosts: web_servers
   become: yes
 
   tasks:
@@ -24,11 +24,10 @@
       name: filebeat
       state: present
 
-  # - name: setting filebeat
-  #   ansible.builtin.lineinfile:
-  #     path: /etc/filebeat/filebeat.yml
-  #     regexp: '^  '
-  #     line: "   "
+  - name: copy conf file
+    copy: 
+      src=./filebeat_conf/filebeat.yml 
+      dest=/etc/filebeat/filebeat.yml 
 
   - name: enable and restart filebeat
     ansible.builtin.systemd:
