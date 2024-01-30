@@ -5,9 +5,22 @@
 
   tasks:
   
-  - name: import the elastic apt key
+ # На момент сдачи работы ключ перестал скачиваться из-за блокировки. Решение ниже.
+
+  # - name: import the elastic apt key
+  #   ansible.builtin.apt_key:
+  #     url: https://artifacts.elastic.co/GPG-KEY-elasticsearch
+  #     state: present
+
+# Скаченыный файл с ключом копируется на вм и добавляется.
+  - name: copy key file
+    copy:
+      src=/home/admin/ansible/gpg_key
+      dest=/home/admin/gpg_key
+
+  - name: add elastik apt key
     ansible.builtin.apt_key:
-      url: https://artifacts.elastic.co/GPG-KEY-elasticsearch
+      file: /home/admin/gpg_key
       state: present
 
   - name: install elastic repository
@@ -28,6 +41,9 @@
     copy: 
       src=./filebeat_conf/filebeat.yml 
       dest=/etc/filebeat/filebeat.yml 
+      mode: 0644
+      owner: root
+      group: root
 
   - name: enable and restart filebeat
     ansible.builtin.systemd:

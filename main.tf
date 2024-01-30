@@ -40,7 +40,7 @@ resource "yandex_compute_instance" "vm-1" {
     subnet_id = yandex_vpc_subnet.subnet-1.id
     nat       = false
     ip_address = "192.168.1.11"
-    security_group_ids = [yandex_vpc_security_group.balancer-sg.id]
+    security_group_ids = [yandex_vpc_security_group.nginx-sg.id]
   }
 
   
@@ -76,7 +76,7 @@ resource "yandex_compute_instance" "vm-2" {
     subnet_id = yandex_vpc_subnet.subnet-2.id
     nat       = false
     ip_address = "192.168.2.22"
-    security_group_ids = [yandex_vpc_security_group.balancer-sg.id]
+    security_group_ids = [yandex_vpc_security_group.nginx-sg.id]
   }
 
   
@@ -232,8 +232,6 @@ resource "yandex_compute_instance" "vm-6" {
 
 
 
-
-
 //_________________________TARGET_GROUP___(ГОТОВО)________________________________________
 resource "yandex_alb_target_group" "ngx-target-group" {
   name      = "ngx-target-group"
@@ -360,10 +358,12 @@ resource "yandex_vpc_security_group" "bastion-sg" {
     }
 }
 
-//________________BALANCER_____________________
-resource "yandex_vpc_security_group" "balancer-sg" {
-  name        = "balancer-sg"
-  description = "rules for balancer"
+
+
+//________________nginx_____________________
+resource "yandex_vpc_security_group" "nginx-sg" {
+  name        = "nginx-sg"
+  description = "rules for nginx"
   network_id  = "${yandex_vpc_network.network-1.id}"  
 
   ingress {
@@ -380,12 +380,36 @@ resource "yandex_vpc_security_group" "balancer-sg" {
     v4_cidr_blocks = ["192.168.33.0/24"] 
   }
 
+  #   ingress {
+  #   protocol       = "TCP"
+  #   description    = "https-filebeat"
+  #   port           = "443"
+  #   v4_cidr_blocks = ["192.168.4.0/24"] 
+  # }
+
   ingress {
     protocol       = "TCP"
     description    = "zabbix in"
-    port           = "10051"
+    port           = "10050"
     v4_cidr_blocks = ["192.168.3.0/24"] 
   }
+
+  ingress {
+    description    = "ANY"
+    protocol       = "ANY"
+    from_port         = 0
+    to_port           = 65535
+    v4_cidr_blocks = ["0.0.0.0/0"] 
+  } 
+
+
+  # ingress {
+  #   description    = "ANY"
+  #   protocol       = "ANY"
+  #   from_port         = 0
+  #   to_port           = 65535
+  #   v4_cidr_blocks = ["192.168.1.0/24", "192.168.2.0/24", "192.168.3.0/24", "192.168.33.0/24", "192.168.4.0/24"] 
+  # }
 
   ingress {
     description = "Health checks from NLB"
@@ -393,9 +417,12 @@ resource "yandex_vpc_security_group" "balancer-sg" {
     predefined_target = "loadbalancer_healthchecks" 
   }
 
+
   egress {
     description    = "ANY"
     protocol       = "ANY"
+    from_port         = 0
+    to_port           = 65535
     v4_cidr_blocks = ["0.0.0.0/0"] 
   }
 }
@@ -423,13 +450,15 @@ resource "yandex_vpc_security_group" "zabbix-sg" {
   ingress {
     protocol       = "TCP"
     description    = "zabbix in"
-    port           = "10050"
+    port           = "10051"
     v4_cidr_blocks = ["192.168.1.0/24", "192.168.2.0/24", "192.168.3.0/24", "192.168.4.0/24"] 
   }
 
   egress {
     description    = "ANY"
     protocol       = "ANY"
+    from_port         = 0
+    to_port           = 65535
     v4_cidr_blocks = ["0.0.0.0/0"] 
   }
 }
@@ -451,7 +480,7 @@ resource "yandex_vpc_security_group" "elastic-sg" {
   ingress {
     protocol       = "TCP"
     description    = "zabbix in"
-    port           = "10051"
+    port           = "10050"
     v4_cidr_blocks = ["192.168.3.0/24"] 
   }
 
@@ -459,17 +488,34 @@ resource "yandex_vpc_security_group" "elastic-sg" {
     protocol       = "TCP"
     description    = "elastic agent in"
     port           = "9200"
-    v4_cidr_blocks = ["192.168.1.0/0", "192.168.2.0/0", "192.168.3.0/0"] 
+    v4_cidr_blocks = ["192.168.1.0/24", "192.168.2.0/24", "192.168.3.0/24"] 
   }
+
+  #   ingress {
+  #   protocol       = "TCP"
+  #   description    = "https-filebeat"
+  #   port           = "443"
+  #   v4_cidr_blocks = ["192.168.1.0/24", "192.168.2.0/24", "192.168.3.0/24"] 
+  # }
+
+  ingress {
+    description    = "ANY"
+    protocol       = "ANY"
+    from_port         = 0
+    to_port           = 65535
+    v4_cidr_blocks = ["0.0.0.0/0"] 
+  }  
 
   egress {
     description    = "ANY"
     protocol       = "ANY"
+    from_port         = 0
+    to_port           = 65535
     v4_cidr_blocks = ["0.0.0.0/0"] 
   }
 }
 
-//___________________KIBANA______________________
+# //___________________KIBANA______________________
 resource "yandex_vpc_security_group" "kibana-sg" {
   name        = "kibana-sg"
   description = "rules for kibana"
@@ -492,19 +538,18 @@ resource "yandex_vpc_security_group" "kibana-sg" {
   ingress {
     protocol       = "TCP"
     description    = "zabbix in"
-    port           = "10051"
+    port           = "10050"
     v4_cidr_blocks = ["192.168.3.0/24"] 
   }
 
   egress {
     description    = "ANY"
     protocol       = "ANY"
+    from_port         = 0
+    to_port           = 65535
     v4_cidr_blocks = ["0.0.0.0/0"] 
   }
 }
-
-
-
 
 
 
@@ -524,10 +569,6 @@ resource "yandex_compute_snapshot_schedule" "daily" {
 
 
 
-
-
-
-
 //_______________ШЛЮЗ И ТАБЛИЦА МАРШРУТИЗАЦИИ__________________________
 resource "yandex_vpc_gateway" "nginx1-2_elastic_gateway" {
   name = "nginx-elastic-gateway"
@@ -543,8 +584,6 @@ resource "yandex_vpc_route_table" "nginx1-2_elastic" {
     gateway_id         = yandex_vpc_gateway.nginx1-2_elastic_gateway.id
   }
 }
-
-
 
 
 
