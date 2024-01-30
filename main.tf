@@ -232,7 +232,7 @@ resource "yandex_compute_instance" "vm-6" {
 
 
 
-//_________________________TARGET_GROUP___(ГОТОВО)________________________________________
+//_________________________TARGET_GROUP___________________________________________
 resource "yandex_alb_target_group" "ngx-target-group" {
   name      = "ngx-target-group"
 
@@ -247,7 +247,7 @@ resource "yandex_alb_target_group" "ngx-target-group" {
   }
 }
 
-//______________________BACKEND_GROUP______(ГОТОВО)____________________________________________
+//______________________BACKEND_GROUP__________________________________________________
 resource "yandex_alb_backend_group" "nginx-backend-group" {
   name      = "nginx-backend-group"
 
@@ -474,14 +474,6 @@ resource "yandex_vpc_security_group" "elastic-sg" {
     port           = "9200"
     v4_cidr_blocks = ["192.168.1.0/24", "192.168.2.0/24", "192.168.3.0/24"] 
   }
-
-  ingress {
-    description    = "ANY"
-    protocol       = "ANY"
-    from_port         = 0
-    to_port           = 65535
-    v4_cidr_blocks = ["0.0.0.0/0"] 
-  }  
 
   egress {
     description    = "ANY"
