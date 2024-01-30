@@ -380,13 +380,6 @@ resource "yandex_vpc_security_group" "nginx-sg" {
     v4_cidr_blocks = ["192.168.33.0/24"] 
   }
 
-  #   ingress {
-  #   protocol       = "TCP"
-  #   description    = "https-filebeat"
-  #   port           = "443"
-  #   v4_cidr_blocks = ["192.168.4.0/24"] 
-  # }
-
   ingress {
     protocol       = "TCP"
     description    = "zabbix in"
@@ -401,15 +394,6 @@ resource "yandex_vpc_security_group" "nginx-sg" {
     to_port           = 65535
     v4_cidr_blocks = ["0.0.0.0/0"] 
   } 
-
-
-  # ingress {
-  #   description    = "ANY"
-  #   protocol       = "ANY"
-  #   from_port         = 0
-  #   to_port           = 65535
-  #   v4_cidr_blocks = ["192.168.1.0/24", "192.168.2.0/24", "192.168.3.0/24", "192.168.33.0/24", "192.168.4.0/24"] 
-  # }
 
   ingress {
     description = "Health checks from NLB"
@@ -490,13 +474,6 @@ resource "yandex_vpc_security_group" "elastic-sg" {
     port           = "9200"
     v4_cidr_blocks = ["192.168.1.0/24", "192.168.2.0/24", "192.168.3.0/24"] 
   }
-
-  #   ingress {
-  #   protocol       = "TCP"
-  #   description    = "https-filebeat"
-  #   port           = "443"
-  #   v4_cidr_blocks = ["192.168.1.0/24", "192.168.2.0/24", "192.168.3.0/24"] 
-  # }
 
   ingress {
     description    = "ANY"
