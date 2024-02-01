@@ -39,8 +39,8 @@
 
   - name: copy conf file
     copy: 
-      src=./filebeat_conf/filebeat.yml 
-      dest=/etc/filebeat/filebeat.yml 
+      src: ./filebeat_conf/filebeat.yml 
+      dest: /etc/filebeat/filebeat.yml 
       mode: 0644
       owner: root
       group: root
