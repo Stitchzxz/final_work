@@ -117,6 +117,7 @@
 <details>
 <summary> Скриншот(-ы) </summary>
 
+![установка nginx](https://github.com/Stitchzxz/final_work/blob/main/img/install_nginx.png)
 ![веб страница](https://github.com/Stitchzxz/final_work/blob/main/img/web_page.png)
 
 </details>
@@ -176,8 +177,8 @@
 <summary> Скриншот(-ы) </summary>
 
 ![установка kibana](https://github.com/Stitchzxz/final_work/blob/main/img/install_kibana.png)
-![установка kibana](https://github.com/Stitchzxz/final_work/blob/main/img/kibana_status.png)
-![установка kibana](https://github.com/Stitchzxz/final_work/blob/main/img/kibana_web.png)
+![статус kibana](https://github.com/Stitchzxz/final_work/blob/main/img/kibana_status.png)
+![веб kibana](https://github.com/Stitchzxz/final_work/blob/main/img/kibana_web.png)
 
 </details>
 
