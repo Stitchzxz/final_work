@@ -146,7 +146,7 @@
 <details>
 <summary> Скриншот(-ы) </summary>
 
-![установка zabbix-agent](https://github.com/Stitchzxz/final_work/blob/main/img/insinstall_zabbix_agent.png)
+![установка zabbix-agent](https://github.com/Stitchzxz/final_work/blob/main/img/install_zabbix_agent.png)
 ![установка zabbix-agent](https://github.com/Stitchzxz/final_work/blob/main/img/enable_zabagent.png)
 ![установка zabbix-agent](https://github.com/Stitchzxz/final_work/blob/main/img/dashboard_zabbix.png)
 
