@@ -151,7 +151,8 @@
 ![установка zabbix-agent](https://github.com/Stitchzxz/final_work/blob/main/img/dashboard_zabbix.png)
 
 </details>
-http://158.160.144.65/
+
+
 ### 2.6. [elasticsearch_pb.yml](https://github.com/Stitchzxz/final_work/blob/main/ansible/elasticsearch_pb.yml)
   - скачивает и добавляет ключ gpg elasticsearch
   - добавляет репозиторий elasticsearch 8.x
