@@ -1,5 +1,4 @@
 var_access.tf
-meta.txt
 terraform
 terraform.tfstate
 key.json
@@ -8,5 +7,5 @@ terraform.tfstate.backup
 .terraform/
 setup_ansible.sh
 .gitignore
-note
+
 
