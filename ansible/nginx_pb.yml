@@ -4,7 +4,7 @@
   become: yes
 
   vars:
-    source_file: ./my_web_site/index.nginx-debian.html
+    source_file: ./my_web_site/index.nginx-debian.html.j2
     destin_file: /var/www/html/
 
   tasks:
@@ -13,11 +13,11 @@
       name=nginx 
       state=latest
 
-  - name: copy mypage to server
-    copy: 
-      src={{ source_file }} 
-      dest={{ destin_file }} 
-      mode=0555
+  - name: make index file
+    template:
+      src: "{{ source_file }}"
+      dest: "{{ destin_file }}/index.nginx-debian.html"
+      mode: 0555
   
   - name: start nginx and enable
     service: name=nginx state=started enabled=yes

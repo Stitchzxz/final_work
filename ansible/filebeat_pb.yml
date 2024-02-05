@@ -37,6 +37,10 @@
       name: filebeat
       state: present
 
+  - name: enter elastic password in confiig file filebeat
+    ansible.builtin.pause:
+      prompt: "Open file ./filebeat_conf/filebeat.yml and insert password"
+
   - name: copy conf file
     copy: 
       src: ./filebeat_conf/filebeat.yml 
@@ -50,5 +54,6 @@
       name: filebeat
       enabled: true
       masked: no
-      state: started
+      daemon_reload: true
+      state: restarted
 ...

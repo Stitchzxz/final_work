@@ -388,14 +388,6 @@ resource "yandex_vpc_security_group" "nginx-sg" {
   }
 
   ingress {
-    description    = "ANY"
-    protocol       = "ANY"
-    from_port         = 0
-    to_port           = 65535
-    v4_cidr_blocks = ["0.0.0.0/0"] 
-  } 
-
-  ingress {
     description = "Health checks from NLB"
     protocol = "TCP"
     predefined_target = "loadbalancer_healthchecks" 

@@ -11,6 +11,6 @@ font-family: Tahoma, Verdana, Arial, sans-serif; }
 </head>
 <body>
 <h3>Дипломная работа по курсу <br>"Системный администратор" <br> Концевой Н.Ю. <br> <h1>Добро пожаловать на страницу!</h1>
-<p>Сервер: 1 <br>ip: 192.168.1.11</p>
+<p>Сервер: {{ansible_hostname}} <br>ip: {{ansible_default_ipv4.address}} </p>
 </body>
 </html>

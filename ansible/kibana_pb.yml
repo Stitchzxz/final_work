@@ -53,4 +53,15 @@
       daemon_reload: true
       masked: no
       state: started
+
+  - name: connect kibana <-> elastic
+    ansible.builtin.pause:
+      prompt: "Open kibana web and insert token."
+
+  - name: save veryfication code
+    ansible.builtin.shell: /usr/share/kibana/bin/kibana-verification-code
+    register: ctlcode_result
+
+  - name: Debug registered var
+    debug: var=ctlcode_result.stdout_lines
 ...

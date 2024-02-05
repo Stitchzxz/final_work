@@ -7,7 +7,7 @@
 
 
 
-### 1. Для выполнения задания был написан файл Terraform [main.tf](https://github.com/Stitchzxz/final_work/blob/main/main.tf) для сооздания следующих ресурсов:
+### 1. Для выполнения задания был написан файл Terraform [main.tf](https://github.com/Stitchzxz/final_work/blob/main/main.tf) для создания следующих ресурсов:
  
 ### 1.1. Виртуальные машины 
   - nginx1 
@@ -37,7 +37,7 @@
 
 
 ### 1.3. Группы безопасности для ограничения доступности хостов по определенным портам
-  - nginx-sg (nginx1-2 разрешен доступ чере збалансировщик на порты 22, 80, 10050)
+  - nginx-sg (nginx1-2 разрешен доступ через балансировщик на порты 22, 80, 10050)
   - zabbix-sg  (разрешен доступ на порты 22, 8080, 10051)
   - elastic-sg (разрешен доступ на порты 22, 10050, 9200)
   - kibana-sg (разрешен доступ на порты 22, 10050, 5601)
@@ -80,7 +80,7 @@
 </details>
 
 
-### 1.6. Шлюз (для доступа в интернет вм расположенных в приватных сетях)
+### 1.6. Шлюз (для доступа в интернет ВМ расположенных в приватных сетях)
 
 <details>
 <summary> Скриншот(-ы) </summary>
@@ -111,7 +111,7 @@
 
 ### 2.3. [nginx_pb.yml](https://github.com/Stitchzxz/final_work/blob/main/ansible/nginx_pb.yml) 
   - устанавливает nginx на две виртуальные машины состоящие в группе web_servers
-  - копирует c локального хоста страницу для отображения при обращении на ip адрес балансировщика  
+  - копирует c локального хоста страницу для отображения при обращении на ip адрес балансировщика. 
 *Проверка работоспособности [тут](http://158.160.144.65:80)
 
 <details>
@@ -141,7 +141,7 @@
   - добавляет репозиторий zabbix
   - устанавливает zabbix agent на все хосты
   - вносит корректировку в файл конфигурации  
-*Ссылка на админку [zabbix](http://51.250.41.230:8080)
+*Ссылка на админку [zabbix](http://51.250.33.162:8080)
 
 <details>
 <summary> Скриншот(-ы) </summary>
@@ -151,18 +151,20 @@
 ![установка zabbix-agent](https://github.com/Stitchzxz/final_work/blob/main/img/dashboard_zabbix.png)
 
 </details>
-
+http://158.160.144.65/
 ### 2.6. [elasticsearch_pb.yml](https://github.com/Stitchzxz/final_work/blob/main/ansible/elasticsearch_pb.yml)
   - скачивает и добавляет ключ gpg elasticsearch
   - добавляет репозиторий elasticsearch 8.x
   - устанавливает elasticsearch и зависимости
   - корректирует конфигурационный файл
+  - выводит на экран пароль пользователя и токен для подключения kibana
 
 <details>
 <summary> Скриншот(-ы) </summary>
 
 ![установка elastic](https://github.com/Stitchzxz/final_work/blob/main/img/install_elastic.png)
 ![установка elastic](https://github.com/Stitchzxz/final_work/blob/main/img/elastic_status.png)
+![установка elastic](https://github.com/Stitchzxz/final_work/blob/main/img/password_token.png)
 
 </details>
 
@@ -170,14 +172,16 @@
   - скачивает и добавляет ключ gpg elasticsearch
   - добавляет репозиторий elasticsearch 8.x
   - устанавливает kibana и зависимости
-  - корректирует конфигурационный файл  
-*Для подключения kibana к elasticsearh необходимо сгенерировать токек на хосте elastik. Также необходимо сгенерировать новый пароль и ввести его вместе с логином в вебинтерфейсе kibana для авторизации. Ссылка на админку [kibana](http://51.250.38.126:5601)
+  - корректирует конфигурационный файл
+  - выводит на экран 6-ти значный код для подтверждения подключения к elastic  
+*Ссылка на админку [kibana](http://51.250.36.99:5601)
 
 <details>
 <summary> Скриншот(-ы) </summary>
 
 ![установка kibana](https://github.com/Stitchzxz/final_work/blob/main/img/install_kibana.png)
 ![статус kibana](https://github.com/Stitchzxz/final_work/blob/main/img/kibana_status.png)
+![подключение kibana](https://github.com/Stitchzxz/final_work/blob/main/img/check_code.png)
 ![веб kibana](https://github.com/Stitchzxz/final_work/blob/main/img/kibana_web.png)
 
 </details>
@@ -187,7 +191,7 @@
   - добавляет репозиторий elasticsearch 8.x
   - устанавливает filebeat и зависимости
   - копирует с локального хоста конфигурационный файл  
-*Для подключения filebeat к elasticsearh необходимо добавить вышеуказанный пароль в конфигурационный файл и перезагрузить сервис.
+*Для подключения filebeat к elasticsearh перед запуском плейбука необходимо указать пароль для авторизации в файле ./filebeat_conf/filebeat.yml 
 
 <details>
 <summary> Скриншот(-ы) </summary>
