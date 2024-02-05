@@ -7,6 +7,6 @@ terraform.tfstate.backup
 .terraform.lock.hcl
 .terraform/
 setup_ansible.sh
-.terraform.tfstate.lock.info
+
 
 
